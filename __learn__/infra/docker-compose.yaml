@@ -13,3 +13,13 @@ services:
     ports:
       - "14268"           # jaeger ingest
       - "9411:9411"       # zipkin
+
+  loki:
+    image: grafana/loki
+    extra_hosts: ['host.docker.internal:host-gateway']
+    command: ['-config.file=/etc/loki/local-config.yaml']
+    ports: "3100:3100"    # expose it to receive logs
+    environment:
+      - JAEGER_AGENT_HOST=tempo
+      - JAEGER_ENDPOINT=http://tempo:14268/api/traces # message tempo with traces
+      - JAEGER_SAMPLER_TYPE=const
