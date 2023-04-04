@@ -51,8 +51,19 @@
         "showTime": true,
         "sortOrder": "Ascending",
         "wrapLogMessage": true
-      }
-
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "editorMode": "builder",
+          "expr": "{traceID=\"$traceID\"}",
+          "queryType": "range",
+          "refId": "A" 
+        }
+      ]
     }
   ]
 }
