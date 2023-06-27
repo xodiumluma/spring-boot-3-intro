@@ -61,7 +61,7 @@
           "editorMode": "builder",
           "expr": "{traceID=\"$traceID\"}",
           "queryType": "range",
-          "refId": "A" 
+          "refId": "A"
         }
       ],
       "title": "Trace ID $traceID logs",
@@ -128,57 +128,167 @@
               "group": "A",
               "mode": "none"
             },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "s"
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 10,
-          "w": 23,
-          "x": 0,
-          "y": 25
-        },
-        "id": 4,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom"
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
           },
-          "tooltip": {
-            "mode": "single",
-            "sort": "none"
-          }
+          "unit": "s"
         },
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "PBFA97CFB590B2093"
-            },
-            "editorMode": "code",
-            "exemplar": true,
-            "expr": "histogram_quantile(1.00, sum(rate(http_server_requests_seconds_bucket{uri=~\"*\"}[$__rate_interval])) by (le))",
-            "legendFormat": "max",
-            "range": true,
-            "refId": "A"
-          }
-        ]
-      }
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 23,
+        "x": 0,
+        "y": 25
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "histogram_quantile(1.00, sum(rate(http_server_requests_seconds_bucket{uri=~\"*\"}[$__rate_interval])) by (le))",
+          "legendFormat": "max",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "histogram_quantile(0.99, sum(rate(http_server_requests_seconds_bucket{uri=~\".*\"}[$__rate_interval])) by (le))",
+          "hide": false,
+          "legendFormat": "tp99",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket{uri=~\".*\"}[$__rate_interval])) by (le))",
+          "hide": false,
+          "legendFormat": "tp95",
+          "range": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "histogram_quantile(1.00, sum(rate(server_job_seconds_bucket[$__rate_interval])) by (le))",
+          "legendFormat": "max",
+          "range": true,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "histogram_quantile(0.99, sum(rate(server_job_seconds_bucket[$__rate_interval])) by (le))",
+          "hide": false,
+          "legendFormat": "tp99",
+          "range": true,
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "histogram_quantile(0.95, sum(rate(server_job_seconds_bucket[$__rate_interval])) by (le))",
+          "hide": false,
+          "legendFormat": "tp95",
+          "range": true,
+          "refId": "F"
+        }
+      ],
+      "title": "latency for All",
+      "type": "timeseries"
     }
-  ]
+  ],
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "0003776c79e02b6c",
+          "value": "0003776c79e02b6c"
+        },
+        "datasource": {
+          "type": "loki",
+          "uid": "loki"
+        },
+        "definition": "label_values(traceId)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Trace ID",
+        "multi": false,
+        "name": "traceID",
+        "options": [],
+        "query": "label_values(traceID)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Logs/Traces/Metrics",
+  "uid": "szVLMe97z",
+  "version": 7,
+  "weekStart": ""
 }
