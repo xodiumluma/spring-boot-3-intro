@@ -6,11 +6,11 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.0.0</version>
+    <version>3.1.1</version>
     <relativePath/>
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>manual-observation</artifactId>
+  <artifactId>simon-manual-observation</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>manual observation</name>
   <description>Manual observation configuration demo</description>
@@ -72,7 +72,7 @@
       <name>Spring Milestones</name>
       <url>https://repo.spring.io/milestone</url>
       <snapshots>
-        <enabled>falase</enabled>
+        <enabled>false</enabled>
       </snapshots>
     </pluginRepository>
     <pluginRepository>
@@ -80,7 +80,7 @@
       <name>Spring Snapshots</name>
       <url>https://repo.spring.io.snapshot</url>
       <releases>
-        <enabled>flase</enabled>
+        <enabled>false</enabled>
       </releases>
     </pluginRepository>
   </pluginRepositories>
