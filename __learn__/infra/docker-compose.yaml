@@ -9,20 +9,22 @@ services:
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
       - ./docker/tempo/tempo-local.yaml:/etc/tempo.yaml:ro
-      - ./tempo-data:/tmp/tempo
+      - ./temp-data:/tmp/tempo
     ports:
-      - "14268"           # jaeger ingest
-      - "9411:9411"       # zipkin
+      - "14268"     # jaeger digest
+      - "9411:9411" # zipkin
 
   loki:
     image: grafana/loki
     extra_hosts: ['host.docker.internal:host-gateway']
-    command: ['-config.file=/etc/loki/local-config.yaml']
-    ports: "3100:3100"    # expose it to receive logs
+    command: ["-config.file=/etc/loki/local-config.yaml"]
+    ports:
+      - "3100:3100" # expose loki so that logs can be sent to it
     environment:
       - JAEGER_AGENT_HOST=tempo
-      - JAEGER_ENDPOINT=http://tempo:14268/api/traces # message tempo with traces
+      - JAEGER_ENDPOINT=http://tempo:14268/api/traces # direct traces to tempo
       - JAEGER_SAMPLER_TYPE=const
+      - JAEGER_SAMPLER_PARAM=1
 
   prometheus:
     image: prom/prometheus
@@ -47,6 +49,5 @@ services:
       - GF_AUTH_DISABLE_LOGIN_FORM=true
     ports:
       - "3000:3000"
-
-# Prometheus URL - http://localhost:9090
-# Grafana URL    - http://localhost:3000
+# prometheus:   http://localhost:9090
+# grafana:      http://localhost:3000
